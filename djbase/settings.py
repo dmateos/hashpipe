@@ -25,7 +25,7 @@ SECRET_KEY = "b-q)7wa#)2x=!qk5dc&yjw7h@6$gy@k7lzz!0a3m%)##du0h0n"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", True)
 
-ALLOWED_HOSTS = ["dev1.mateos.lan", os.environ.get("ALLOWED_HOSTS")]
+ALLOWED_HOSTS = ["home.mateos.cc", "dev1.mateos.lan", os.environ.get("ALLOWED_HOSTS")]
 
 LOGIN_URL = "login"
 LOGOUT_URL = "logout"
