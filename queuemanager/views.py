@@ -12,6 +12,7 @@ import time
 class EndpointView(View):
     def get(self, request, id):
         endpoint = Endpoint.objects.filter(ep_id=id).first()
+
         if endpoint:
             return StreamingHttpResponse(endpoint.pull())
         else:
