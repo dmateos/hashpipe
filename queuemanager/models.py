@@ -4,8 +4,8 @@ import os
 
 
 class Endpoint(models.Model):
-    ENGINE_OPTIONS = (("REDIS", "Redis"),)
-    engine = models.CharField(max_length=32, choices=ENGINE_OPTIONS, default="sqs")
+    ENGINE_OPTIONS = (("REDIS", "Redis"), ("RAM", "Ram"))
+    engine = models.CharField(max_length=32, choices=ENGINE_OPTIONS, default="REDIS")
     ep_id = models.CharField(max_length=16, null=False)
 
     def push(self, n):
@@ -21,6 +21,8 @@ class Endpoint(models.Model):
         if self.engine == "REDIS":
             host = os.environ.get("REDIS_HOST", "localhost")
             return lib.endpointengine.RedisEndpointEngine(self.ep_id, {"host": host})
+        elif self.engine == "RAM":
+            return lib.endpointengine.RamEndpointEngine(self.ep_id)
 
 
 class Transformer(models.Model):
