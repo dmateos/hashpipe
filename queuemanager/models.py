@@ -14,6 +14,7 @@ class Endpoint(models.Model):
 
     def pull(self):
         engine = self._get_engine()
+        # This is a generator (yield)
         return engine.pull()
 
     def _get_engine(self):
@@ -23,5 +24,10 @@ class Endpoint(models.Model):
 
 
 class Transformer(models.Model):
+    def call(self, data):
+        pass
+
+
+class Action(models.Model):
     def call(self, data):
         pass

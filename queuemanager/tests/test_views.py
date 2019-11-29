@@ -63,3 +63,18 @@ def test_endpointlist_lists_endpoints(client):
 
     assert response.status_code == 200
     assert "abc123" in str(response.content)
+
+
+# EndpointEdit
+@pytest.mark.django_db
+def test_endpointedit_edits_endpoint(client):
+    endpoint = Endpoint(engine="REDIS", ep_id="abc123")
+    endpoint.save()
+
+    response = client.post(
+        reverse("endpoint_edit", args=(endpoint.id,)), {"ep_id": "xyz987"}, follow=True
+    )
+
+    assert response.status_code == 200
+    assert "abc123" not in str(response.content)
+    assert "xyz987" in str(response.content)

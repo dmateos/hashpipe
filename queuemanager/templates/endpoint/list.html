@@ -8,6 +8,7 @@
         <th> Endpoint </th>
         <th> Engine </th>
         <th> Stream </th>
+        <th> Edit </th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
         <td> {{ obj.ep_id }} </td>
         <td> {{ obj.engine }} </td>
         <td> <a href="{% url "endpoint" obj.ep_id %}">view</a></td>
+        <td> <a href="{% url "endpoint_edit" obj.id %}">edit</a></td>
       </tr>
       {% endfor %}
     </tbody>
