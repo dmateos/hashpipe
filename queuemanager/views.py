@@ -1,5 +1,5 @@
 from django.views import View
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, UpdateView, CreateView
 from django.http import StreamingHttpResponse, HttpResponseNotFound, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
@@ -34,6 +34,13 @@ class EndpointList(ListView):
 
 
 class EndpointUpdate(UpdateView):
+    model = Endpoint
+    template_name = "endpoint/form.html"
+    success_url = reverse_lazy("endpoint_list")
+    fields = ["engine", "ep_id"]
+
+
+class EndpointCreate(CreateView):
     model = Endpoint
     template_name = "endpoint/form.html"
     success_url = reverse_lazy("endpoint_list")

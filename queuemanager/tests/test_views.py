@@ -65,6 +65,17 @@ def test_endpointlist_lists_endpoints(client):
     assert "abc123" in str(response.content)
 
 
+# Endpoint Create
+@pytest.mark.django_db
+def test_endpointcreate_creates_endpoint(client):
+    response = client.post(
+        reverse("endpoint_create"), {"ep_id": "abc123", "engine": "REDIS"}, follow=True
+    )
+
+    assert response.status_code == 200
+    assert "abc123" in str(response.content)
+
+
 # EndpointEdit
 @pytest.mark.django_db
 def test_endpointedit_edits_endpoint(client):
