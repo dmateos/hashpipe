@@ -1,0 +1,23 @@
+{% extends 'engine/base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th> Endpoint </th>
+        <th> Engine </th>
+        <th> Stream </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for obj in object_list %}
+      <tr>
+        <td> {{ obj.ep_id }} </td>
+        <td> {{ obj.engine }} </td>
+        <td> <a href="{% url "endpoint" obj.ep_id %}">view</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

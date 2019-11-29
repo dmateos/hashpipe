@@ -23,5 +23,10 @@ def test_endpointview_error_on_invalid_endpoint(client):
 # EndpointList
 @pytest.mark.django_db
 def test_endpointlist_lists_endpoints(client):
+    endpoint = Endpoint(engine="REDIS", ep_id="abc123")
+    endpoint.save()
+
     response = client.get(reverse("endpoint_list"))
+
     assert response.status_code == 200
+    assert "abc123" in str(response.content)
