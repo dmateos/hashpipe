@@ -20,6 +20,39 @@ def test_endpointview_error_on_invalid_endpoint(client):
     assert response.status_code == 404
 
 
+@pytest.mark.django_db
+def test_endpointview_post(client):
+    endpoint = Endpoint(engine="REDIS", ep_id="abc123")
+    endpoint.save()
+
+    response = client.post(
+        reverse("endpoint", args=("abc123",)), {"data": "hello world"}, follow=True
+    )
+
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_endpointview_post_not_found(client):
+    response = client.post(
+        reverse("endpoint", args=("abc123",)), {"data": "hello world"}, follow=True
+    )
+
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_endpointview_post_invalid_content(client):
+    endpoint = Endpoint(engine="REDIS", ep_id="abc123")
+    endpoint.save()
+
+    response = client.post(
+        reverse("endpoint", args=("abc123",)), {"dataz": "hello world"}, follow=True
+    )
+
+    assert response.status_code == 404
+
+
 # EndpointList
 @pytest.mark.django_db
 def test_endpointlist_lists_endpoints(client):
