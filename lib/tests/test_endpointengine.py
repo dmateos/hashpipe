@@ -30,14 +30,11 @@ def test_redis_endpoint_engine_gets_from_redis():
     with mock.patch("lib.endpointengine.redis") as mock_redis:
         r = e.RedisEndpointEngine("aeb1923", {})
 
-        mock_redis.Redis.return_value.pubsub.return_value.get_message.return_value = {
-            "data": "hello"
-        }
+        mock_redis.Redis.return_value.pubsub.return_value.listen.return_value = [
+            {"data": "hello"},
+            {"data": "world"},
+        ]
         result = r.pull()
 
         assert next(result) == "hello"
-
-        mock_redis.Redis.return_value.pubsub.return_value.get_message.return_value = {
-            "data": "world"
-        }
         assert next(result) == "world"

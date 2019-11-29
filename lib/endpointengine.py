@@ -10,7 +10,7 @@ class RedisEndpointEngine:
         else:
             self.r = redis.Redis(decode_responses=True)
 
-        self.p = self.r.pubsub()
+        self.p = self.r.pubsub(ignore_subscribe_messages=True)
 
     def push(self, x):
         self.r.publish(self.endpoint_id, x)
@@ -18,9 +18,10 @@ class RedisEndpointEngine:
 
     def pull(self):
         self.p.subscribe(self.endpoint_id)
+        count = 0
 
-        while True:
-            message = self.p.get_message()
+        for message in self.p.listen():
             if message:
+                count += 1
                 data = message["data"]
                 yield str(data)
