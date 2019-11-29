@@ -25,3 +25,5 @@ def test_endpoint_pull_from_queue_with_redis_engine():
 
     assert next(v) == "hello"
     assert next(v) == "world"
+
+    thread.join()
