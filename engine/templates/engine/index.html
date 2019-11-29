@@ -7,5 +7,57 @@
 {% endblock %}
 
 {% block content %}
+<div>
+  <h1> Basically nc + ETL over HTTP</h1>
+</div>
 
+<div>
+  <h2> Endpoints </h2>
+
+  <p> Endpoints represent a connector between an input and an output.  </p>
+  <p> All endpoints have a unique endpoint-id which serve as its point of ingress and egress. </p>
+  <p> Endpoints support various configurations, backend engines, and connections between other #pipe primitives. </p>
+
+  <h3> Example </h3>
+  <h4> Basic </h4>
+  <p> Ingress </p>
+  <pre>
+    curl -N http://dev1.mateos.lan:13377/endpoint/ep/abc1234
+    hello world hello world2
+  </pre>
+
+  <p> Egress </p>
+  <pre>
+    $ curl -d "data=hello world " -X POST http://dev1.mateos.lan:13377/endpoint/ep/abc1234
+    OK
+    $ curl -d "data=hello world 2" -X POST http://dev1.mateos.lan:13377/endpoint/ep/abc1234
+    OK
+  </pre>
+
+  <h4> Remote timer for script exection </h4>
+  <p> Egress </p>
+  <pre>
+    $ sleep 60 || curl -d "data=go" -X POST http://dev1.mateos.lan:13377/endpoint/ep/abc1234
+    OK
+  </pre>
+
+  <p> Ingress </p>
+  <pre>
+    curl -N http://dev1.mateos.lan:13377/endpoint/ep/abc1234?max=1 || script-to-run-after-60s.sh
+  </pre>
+</div>
+
+<div>
+  <h2> Transformer </h2>
+  <p> Currently unimplemented. </p>
+  <p> Transformers will represent a point of data transformation between ingress and egress. </p>
+  <p> An example would be a transoformation between a YAML formatted ingress to a JSON formatted egress. </p>
+<div>
+
+<div>
+  <h2> Action </h2>
+  <p> Currently unimplemented. </p>
+  <p> Actions will represent an external event connection between ingress and egress. </p>
+  <p> An example would be a connection to AWS SNS for the ability to send a SMS or Email on ingress events. </p>
+<div>
 {% endblock %}

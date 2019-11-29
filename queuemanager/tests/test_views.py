@@ -15,6 +15,12 @@ def test_endpointview_loads_endpoint(client):
 
 
 @pytest.mark.django_db
+def test_endpointview_messagecount_param(client):
+    endpoint = Endpoint(engine="REDIS", ep_id="abc123")
+    endpoint.save()
+
+
+@pytest.mark.django_db
 def test_endpointview_error_on_invalid_endpoint(client):
     response = client.get(reverse("endpoint", args=("abc123",)))
     assert response.status_code == 404
